@@ -1,13 +1,9 @@
-function App() {
-  return (
-    <div>
-      <h1>Enterprise Order Management Portal</h1>
+import { RouterProvider } from 'react-router-dom';
 
-      <p>
-        React + TypeScript + Redux Toolkit
-      </p>
-    </div>
-  );
+import { router } from './app/router';
+
+function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;
