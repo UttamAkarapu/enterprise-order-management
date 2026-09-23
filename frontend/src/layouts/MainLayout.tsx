@@ -1,10 +1,22 @@
-import { NavLink, Outlet } from 'react-router-dom';
-import './MainLayout.css';
+import { NavLink, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { useAppDispatch } from "../app/hooks";
+import { logout } from "../features/auth/authSlice";
+
+import "./MainLayout.css";
 
 function MainLayout() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
     <div className="app-layout">
-
       {/* Header */}
       <header className="app-header">
         <div className="header-brand">
@@ -14,21 +26,22 @@ function MainLayout() {
 
         <div className="header-user">
           <span>Admin</span>
+
           <span className="user-avatar">A</span>
+
+          <button onClick={handleLogout}>Logout</button>
         </div>
       </header>
 
       {/* Body */}
       <div className="app-body">
-
         {/* Sidebar */}
         <aside className="sidebar">
           <nav className="sidebar-nav">
-
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                isActive ? 'nav-link active' : 'nav-link'
+                isActive ? "nav-link active" : "nav-link"
               }
             >
               <span>📊</span>
@@ -38,13 +51,12 @@ function MainLayout() {
             <NavLink
               to="/orders"
               className={({ isActive }) =>
-                isActive ? 'nav-link active' : 'nav-link'
+                isActive ? "nav-link active" : "nav-link"
               }
             >
               <span>📦</span>
               Orders
             </NavLink>
-
           </nav>
         </aside>
 
@@ -52,7 +64,6 @@ function MainLayout() {
         <main className="main-content">
           <Outlet />
         </main>
-
       </div>
     </div>
   );
