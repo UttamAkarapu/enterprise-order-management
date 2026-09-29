@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import OrderFilters from '../features/orders/components/OrderFilters';
 import OrderTable from '../features/orders/components/OrderTable';
 import useDebounce from '../hooks/useDebounce';
+import OrderPagination from '../features/orders/components/OrderPagination';
 
 import { mockOrders } from '../features/orders/mockOrders';
 
@@ -15,6 +16,9 @@ import type {
 function Orders() {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 300);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const pageSize = 10;
   
   const [status, setStatus] =
     useState<OrderStatus | 'all'>('all');
@@ -24,6 +28,10 @@ function Orders() {
 
 const [sortDirection, setSortDirection] =
   useState<SortDirection>('desc');
+
+  useEffect(() => {
+  setCurrentPage(1);
+}, [debouncedSearch, status, sortField, sortDirection]);
 
   const processedOrders = useMemo(() => {
   const normalizedSearch = debouncedSearch
@@ -77,6 +85,23 @@ const [sortDirection, setSortDirection] =
   sortField,
   sortDirection,
 ]);
+
+const totalPages = Math.ceil(
+  processedOrders.length / pageSize
+);
+
+const paginatedOrders = useMemo(() => {
+  const startIndex =
+    (currentPage - 1) * pageSize;
+
+  const endIndex =
+    startIndex + pageSize;
+
+  return processedOrders.slice(
+    startIndex,
+    endIndex
+  );
+}, [processedOrders, currentPage]);
 
   return (
     <div>
@@ -140,7 +165,12 @@ const [sortDirection, setSortDirection] =
   </select>
 </div>
 
-      <OrderTable orders={processedOrders} />
+      <OrderTable orders={paginatedOrders} />
+      <OrderPagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  onPageChange={setCurrentPage}
+/>
     </div>
   );
 }

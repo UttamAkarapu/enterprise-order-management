@@ -42,3 +42,39 @@
 .status-filter {
   width: 180px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 20px;
+}
+
+.pagination button {
+  min-width: 36px;
+  height: 36px;
+
+  border: 1px solid #d1d5db;
+  background: white;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination .active-page {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
