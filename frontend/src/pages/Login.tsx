@@ -10,6 +10,9 @@ function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState<
+  'admin' | 'manager' | 'viewer'
+>('admin');
 
   const handleSubmit = (
     event: React.FormEvent<HTMLFormElement>
@@ -21,7 +24,7 @@ function Login() {
       id: '1',
       name: 'John Admin',
       email,
-      role: 'admin' as const,
+      role,
     };
 
     const token = 'mock-jwt-token';
@@ -70,6 +73,34 @@ function Login() {
         <button type="submit">
           Login
         </button>
+
+        <div>
+  <label>Role</label>
+
+  <select
+    value={role}
+    onChange={(event) =>
+      setRole(
+        event.target.value as
+          | 'admin'
+          | 'manager'
+          | 'viewer'
+      )
+    }
+  >
+    <option value="admin">
+      Admin
+    </option>
+
+    <option value="manager">
+      Manager
+    </option>
+
+    <option value="viewer">
+      Viewer
+    </option>
+  </select>
+</div>
       </form>
     </div>
   );
