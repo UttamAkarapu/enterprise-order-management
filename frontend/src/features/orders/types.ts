@@ -15,3 +15,12 @@ export interface Order {
   status: OrderStatus;
   orderDate: string;
 }
+
+export type SortField =
+  | 'orderDate'
+  | 'amount'
+  | 'customerName';
+
+export type SortDirection =
+  | 'asc'
+  | 'desc';
