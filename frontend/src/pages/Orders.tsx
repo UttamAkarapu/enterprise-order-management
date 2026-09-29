@@ -1,4 +1,5 @@
-import PermissionGate from '../features/auth/components/PermissionGate';
+import OrderTable from '../features/orders/components/OrderTable';
+import { mockOrders } from '../features/orders/mockOrders';
 
 function Orders() {
   return (
@@ -6,29 +7,14 @@ function Orders() {
       <div className="page-header">
         <div>
           <h1>Orders</h1>
-          <p>Manage customer orders.</p>
+
+          <p>
+            Search, filter and manage customer orders.
+          </p>
         </div>
       </div>
 
-      <div>
-        <PermissionGate permission="orders:create">
-          <button>
-            Create Order
-          </button>
-        </PermissionGate>
-
-        <PermissionGate permission="orders:edit">
-          <button>
-            Edit Order
-          </button>
-        </PermissionGate>
-
-        <PermissionGate permission="orders:delete">
-          <button>
-            Delete Order
-          </button>
-        </PermissionGate>
-      </div>
+      <OrderTable orders={mockOrders} />
     </div>
   );
 }
